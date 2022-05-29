@@ -1,0 +1,57 @@
+<?php
+
+namespace App\Providers;
+
+
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
+use Kaca\Actions\Cashier\SignInCashier;
+use Kaca\Actions\Receipt\CreateLocalReceipt;
+use Kaca\Actions\Receipt\CreateReceipt;
+use Kaca\Actions\Receipt\SyncLocalReceipt;
+use Kaca\Actions\Receipt\SyncReceiptStatus;
+use Kaca\Actions\Report\CreateReport;
+use Kaca\Actions\Shift\CloseShift;
+use Kaca\Actions\Shift\OpenShift;
+use Kaca\Actions\Shift\SyncShiftStatus;
+use Kaca\CheckboxEntry;
+use Kaca\Kaca;
+use Kaca\KacaApplicationServiceProvider as BaseKacaApplicationServiceProvider;
+
+class KacaApplicationServiceProvider extends BaseKacaApplicationServiceProvider
+{
+    public function boot(): void
+    {
+        Kaca::useUserModel(User::class);
+        Kaca::userModelFieldNameUsing('name');
+
+        Kaca::createCheckboxEntryUsing(CheckboxEntry::class);
+
+        Kaca::openShiftUsing(OpenShift::class);
+        Kaca::closeShiftUsing(CloseShift::class);
+        Kaca::syncShiftStatusUsing(SyncShiftStatus::class);
+
+        Kaca::createXReportUsing(CreateReport::class);
+
+        Kaca::signInCashierUsing(SignInCashier::class);
+
+        Kaca::createReceiptUsing(CreateReceipt::class);
+        Kaca::createLocalReceiptUsing(CreateLocalReceipt::class);
+        Kaca::syncLocalReceiptUsing(SyncLocalReceipt::class);
+        Kaca::syncReceiptStatusUsing(SyncReceiptStatus::class);
+    }
+
+    protected function gate(): void
+    {
+        Gate::define('seniorPermission', function ($user) {
+            return in_array($user->email, [
+
+            ]);
+        });
+        Gate::define('developerPermission', function ($user) {
+            return in_array($user->email, [
+
+            ]);
+        });
+    }
+}
