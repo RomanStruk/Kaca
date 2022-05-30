@@ -6,4 +6,3 @@ composer.lock
 Thumbs.db
 /.phpunit.result.cache
 /.phpunit.cache/**
-!/composer.lock
