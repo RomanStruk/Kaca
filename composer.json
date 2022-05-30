@@ -13,7 +13,7 @@
     "php": "^7.4",
     "ext-json": "*",
     "illuminate/support": "~7|~8",
-    "guzzlehttp/guzzle": "7.4.x-dev"
+    "guzzlehttp/guzzle": "^7.4.0-dev"
   },
   "require-dev": {
     "orchestra/testbench": "6.x",
